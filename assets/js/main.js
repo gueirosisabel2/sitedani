@@ -818,7 +818,7 @@ function initContactForm() {
     const cidade = String(data.get('cidade') || '').trim();
     const assunto = form.querySelector('#formAssunto')?.selectedOptions[0]?.textContent?.trim() || 'Atendimento';
     const mensagem = String(data.get('mensagem') || '').trim();
-    if (!nome || !whatsapp || !cidade || !mensagem || !data.get('consentimento')) return;
+    if (!nome || !whatsapp || !cidade || !mensagem) return;
 
     const mensagemPronta = [
       'Olá! Gostaria de falar com a equipe da deputada Dani Alonso.',
@@ -827,7 +827,7 @@ function initContactForm() {
       'Mensagem:', mensagem
     ].join('\n');
     const url = 'https://wa.me/5511916912200?text=' + encodeURIComponent(mensagemPronta);
-    window.location.assign(url);
+    // Navegação na mesma aba: evita bloqueadores de pop-up e preserva a mensagem preenchida.
     if (feedbackAlert) {
       feedbackAlert.replaceChildren();
       const text = document.createElement('span');
@@ -836,6 +836,7 @@ function initContactForm() {
       feedbackAlert.className = 'form-feedback-alert notice';
       feedbackAlert.style.display = 'flex';
     }
+    window.location.href = url;
   });
 }
 

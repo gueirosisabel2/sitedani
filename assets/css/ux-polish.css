@@ -723,3 +723,30 @@ main .bio-paragraphs p, main p[style*="font-size: 0.95rem; margin-top: 14px"] { 
   .site-footer .brand-logo { height: 64px; }
 }
 .gallery-archive--solo { margin-top: 0; }
+
+
+/* Ajustes de ícones e responsividade solicitados — novembro/2026 */
+.bandeira-card .feature-icon-box .svg-icon {
+  width: 30px; height: 30px; fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+@media (max-width: 768px) {
+  .m21-photo-mobile-hide { display: none !important; }
+  .projects-browser-box { padding: 24px 16px !important; max-width: 100%; min-width: 0; }
+  .browser-header { display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+  .browser-title-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+  .browser-title { font-size: clamp(1.25rem, 5vw, 1.55rem); line-height: 1.25; overflow-wrap: anywhere; }
+  .browser-count { font-size: .8rem; line-height: 1.4; }
+  .search-input-wrap { width: 100%; max-width: 100%; min-width: 0; flex-basis: auto; }
+  .search-input { width: 100%; min-width: 0; font-size: 16px; }
+  .category-filter-chips { display: flex; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; padding: 2px 2px 12px; margin-bottom: 18px;
+    scrollbar-width: thin; scrollbar-color: #b8c8d9 transparent; }
+  .category-filter-chips .filter-chip { flex: 0 0 auto; white-space: nowrap; scroll-snap-align: start; font-size: .84rem; padding: 10px 15px; }
+  .projects-cards-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
+  .law-card { min-width: 0; padding: 20px 18px; overflow-wrap: anywhere; }
+}
+@media (max-width: 390px) {
+  .projects-browser-box { padding: 18px 12px !important; }
+  .law-card { padding: 18px 14px; }
+}
