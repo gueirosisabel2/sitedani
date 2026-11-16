@@ -1,0 +1,2 @@
+Coloque aqui as fotos da galeria (rode tools/baixar-fotos-galeria.sh ou .ps1).
+Os nomes dos arquivos estão em assets/js/galeria-fotos.js.

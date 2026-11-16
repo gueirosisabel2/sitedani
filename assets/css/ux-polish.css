@@ -1,0 +1,725 @@
+/* ===========================================================================
+   DANI ALONSO • V7 — PENTE FINO DE UI/UX (novembro de 2026)
+   Camada final carregada depois de style.css e brand-refresh.css.
+   Não altera a estrutura das páginas: corrige legibilidade, contraste,
+   responsividade, áreas de toque e pequenos detalhes de acabamento.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   1. Tokens de contraste (WCAG AA ≥ 4.5:1 para texto pequeno)
+   --------------------------------------------------------------------------- */
+:root {
+  --text-light: #646A72;      /* antes #828891 (3.6:1) → agora ~5.5:1 no branco */
+  --gold-text: #7E6235;       /* dourado legível sobre areia/gelo */
+  --rose-text: #92543F;       /* terracota legível em textos pequenos */
+  --on-navy-muted: #C9D4DE;   /* texto secundário sobre navy */
+}
+
+/* Acervo editorial integrado — cards, paginação e leitura completa */
+.noticias-grid { align-items: stretch; }
+.news-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: 1px solid rgba(30, 58, 95, .1);
+  box-shadow: 0 10px 30px rgba(30, 58, 95, .08);
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.news-card:hover,
+.news-card:focus-visible {
+  transform: translateY(-5px);
+  border-color: rgba(30, 58, 95, .24);
+  box-shadow: 0 22px 44px rgba(30, 58, 95, .14);
+  outline: none;
+}
+.news-card .news-thumb-wrap { aspect-ratio: 16 / 10; }
+.news-card .news-body { display: flex; flex: 1; flex-direction: column; }
+.news-card .news-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.news-card .news-snippet {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+.news-card .news-read-more { margin-top: auto; padding-top: 18px; }
+.news-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 56px;
+}
+.news-pagination .btn-secondary { min-width: 118px; padding: 11px 20px; font-size: .88rem; }
+.news-pagination .btn-secondary:disabled { opacity: .42; cursor: not-allowed; transform: none; }
+.news-pagination span {
+  min-width: 132px;
+  padding: 0 12px;
+  color: var(--navy-900);
+  font-size: .92rem;
+  font-weight: 700;
+  text-align: center;
+}
+.news-empty-state {
+  grid-column: 1 / -1;
+  padding: 64px 24px;
+  border: 1px dashed var(--border-medium);
+  border-radius: 18px;
+  background: var(--neutral-50, #fafafa);
+  color: var(--navy-700);
+  text-align: center;
+}
+.news-empty-state svg { margin: 0 auto 16px; }
+#newsModal .modal-card {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 22px;
+  box-shadow: 0 30px 90px rgba(8, 25, 45, .34);
+}
+#newsModal .modal-header-img {
+  width: 100%;
+  height: clamp(240px, 42vw, 460px);
+  object-fit: cover;
+}
+#newsModal .modal-body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 60px);
+}
+.news-modal-title {
+  margin: 0 0 18px;
+  color: var(--navy-950);
+  font-family: var(--font-sans);
+  font-size: clamp(1.7rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  line-height: 1.13;
+}
+.news-modal-lead {
+  margin-bottom: 32px;
+  color: var(--navy-800);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.65;
+}
+.news-article-content { color: var(--text-body); font-size: 1rem; line-height: 1.85; }
+.news-article-content > * + * { margin-top: 1.25em; }
+.news-article-content h2,
+.news-article-content h3,
+.news-article-content h4 { margin-top: 1.8em; color: var(--navy-950); line-height: 1.25; }
+.news-article-content img,
+.news-article-content figure,
+.news-article-content video,
+.news-article-content iframe { max-width: 100%; height: auto; border-radius: 14px; }
+.news-article-content figcaption {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: .82rem;
+  line-height: 1.45;
+  text-align: center;
+}
+.news-article-content blockquote {
+  margin: 1.8em 0;
+  padding: 8px 0 8px 24px;
+  border-left: 4px solid var(--gold-400);
+  color: var(--navy-800);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.news-article-content a {
+  color: var(--navy-700);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(30, 58, 95, .35);
+  text-underline-offset: 3px;
+}
+.news-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+}
+@media (max-width: 720px) {
+  .news-pagination { gap: 8px; }
+  .news-pagination .btn-secondary { min-width: 0; padding-inline: 14px; }
+  .news-pagination span { min-width: 108px; padding-inline: 4px; font-size: .82rem; }
+  #newsModal .modal-card {
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    border-radius: 16px;
+  }
+  .news-modal-footer { align-items: stretch; flex-direction: column; }
+}
+
+/* ---------------------------------------------------------------------------
+   2. Ritmo tipográfico global
+   --------------------------------------------------------------------------- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { line-height: 1.22; text-wrap: balance; }
+main p, main li { text-wrap: pretty; }
+/* Títulos com estilo inline herdavam line-height 1.7 do body */
+main h2[style], main h3[style], main h4[style] { line-height: 1.25 !important; }
+/* Parágrafos longos: medida de leitura confortável */
+main .bio-paragraphs p, main p[style*="font-size: 0.95rem; margin-top: 14px"] { max-width: 72ch; }
+
+/* Etiquetas (eyebrows) nunca abaixo de 11,5 px */
+.page-tag, .section-tag,
+.page-tag[style], .section-tag[style] { font-size: .72rem; letter-spacing: .12em; }
+.hero-badge-wrap { font-size: .72rem; }
+.page-tag.rose, .section-tag.rose { color: var(--rose-text); }
+
+/* Barra superior e menu desktop um pouco maiores */
+.top-bar { font-size: .78rem; }
+.top-bar-socials a { min-height: 32px; display: inline-flex; align-items: center; }
+.nav-link { font-size: .76rem; }
+.btn-header-contact { font-size: .8rem; }
+
+/* ---------------------------------------------------------------------------
+   3. Contraste — itens que reprovavam no AA
+   --------------------------------------------------------------------------- */
+.news-date { color: var(--text-muted); }
+.hero-stats .stat-number { color: var(--gold-text); }
+.project-badge.saude { color: var(--rose-text); }
+.project-badge, .law-category-tag, .news-category-badge { font-size: .75rem; }
+.channel-title { color: var(--on-navy-muted); font-size: .8rem; }
+.initiative-card--autogoverno .logo-role,
+.site-header .logo-role { font-size: .74rem; }
+.site-footer .logo-role { color: var(--on-navy-muted); }
+.site-footer .footer-bottom { color: var(--on-navy-muted); }
+.site-footer .footer-bottom > div[style] { color: var(--on-navy-muted) !important; }
+.movement-story__quote-caption { color: var(--rose-text); font-size: .78rem; }
+.mulher-closing-quote { color: var(--rose-900); }
+
+/* ---------------------------------------------------------------------------
+   4. Áreas de toque (mín. ~44 px) e estados de foco
+   --------------------------------------------------------------------------- */
+.footer-links-list { gap: 2px; }
+.footer-links-list li a { padding-block: 9px; min-height: 40px; font-size: .86rem; }
+.site-footer .top-bar-socials a { min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
+.filter-chip { min-height: 42px; padding: 9px 18px; font-size: .86rem; }
+.law-detail-btn { min-height: 44px; padding: 10px 0 10px 12px; margin-right: -2px; font-size: .84rem; }
+.btn-project-modal { min-height: 44px; }
+.bandeira-action { min-height: 44px; }
+.news-read-more { min-height: 40px; display: inline-flex; align-items: center; }
+.mobile-nav-links .nav-link { min-height: 48px; display: flex; align-items: center; }
+.mobile-menu-close { min-width: 44px; min-height: 44px; }
+.modal-close-btn { width: 44px; height: 44px; }
+.filter-chip:focus-visible, .law-detail-btn:focus-visible, .btn-project-modal:focus-visible,
+.footer-links-list a:focus-visible, .site-footer a:focus-visible { outline: 3px solid #E6C677; outline-offset: 3px; border-radius: 6px; }
+.filter-chip:focus-visible, .law-detail-btn:focus-visible, .btn-project-modal:focus-visible { outline-color: #9D8357; }
+
+/* Campos de busca */
+.search-input { -webkit-appearance: none; appearance: none; min-height: 46px; font-size: 1rem; }
+.search-input::-webkit-search-decoration { -webkit-appearance: none; }
+.search-input::placeholder, .form-input::placeholder, .form-textarea::placeholder { color: #737A82; opacity: 1; }
+
+/* Formulário: 16 px evita o zoom automático do iOS ao focar */
+.form-input, .form-select, .form-textarea { font-size: 1rem; min-height: 50px; }
+.form-textarea { min-height: 140px; }
+
+/* ---------------------------------------------------------------------------
+   5. Projetos de Lei
+   --------------------------------------------------------------------------- */
+.law-desc { font-size: .9rem !important; color: var(--text-body) !important; }
+.law-title { font-size: 1rem; }
+.browser-title-wrap { flex-wrap: wrap; row-gap: 8px; }
+.browser-count { font-size: .82rem; white-space: nowrap; }
+.search-input-wrap { min-width: min(280px, 100%); }
+
+/* ---------------------------------------------------------------------------
+   6. Notícias, modais e lightbox
+   --------------------------------------------------------------------------- */
+.news-snippet { font-size: .92rem; line-height: 1.7; }
+.modal-body { overflow-wrap: break-word; }
+.lightbox-caption { max-width: 60ch; padding-inline: 12px; line-height: 1.6; }
+
+/* ---------------------------------------------------------------------------
+   7. Mulher Inteira: imagem do topo sem cortar o rosto quando empilha
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .page-hero-inner.has-grid .mi-hero-image {
+    width: 100%; max-width: 640px; margin-inline: auto;
+    min-height: 0; aspect-ratio: 5 / 4;
+  }
+  .page-hero-inner.has-grid .mi-hero-image img { object-position: center 20%; }
+}
+
+/* ---------------------------------------------------------------------------
+   8. Tablet (≤ 1024 px)
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  /* Cartões de destaque com estilo inline (A Deputada, O Que Defendo, Início) */
+  .section .container > div[style*="padding: 56px"],
+  .section .container > div[style*="padding: 48px"] { padding: 36px !important; gap: 32px !important; }
+  .hero-title { text-wrap: balance; }
+}
+
+/* ---------------------------------------------------------------------------
+   9. Celular e tablet pequeno (≤ 768 px)
+   --------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Leitura: corpo nunca abaixo de 15 px */
+  .hero-desc, .page-desc, .section-subtitle { font-size: 1rem; line-height: 1.75; }
+  .bio-paragraphs, .bio-paragraphs p { font-size: 1rem; }
+  .bandeira-desc { font-size: .97rem; }
+  .project-desc, .news-snippet, .manifesto-description, .manifesto-aside-sub { font-size: .95rem; }
+  .law-desc { font-size: .93rem !important; }
+  .initiative-card p { font-size: .97rem !important; }
+
+  .page-tag, .section-tag,
+  .page-tag[style], .section-tag[style] { font-size: .72rem; letter-spacing: .1em; }
+  .brand-role { font-size: 8px; }
+
+  /* Cartões com padding inline enorme: mais área útil para o texto */
+  .section .container > div[style*="padding: 56px"],
+  .section .container > div[style*="padding: 48px"] { padding: 22px !important; gap: 26px !important; }
+  .section .container > div[style*="display: grid"] h2[style],
+  .section .container > div[style*="display: grid"] h3[style] { font-size: clamp(1.55rem, 6.2vw, 2rem) !important; margin-bottom: 14px !important; }
+  .section .container > div[style*="display: grid"] h2[style] br { display: none; }
+  .section .container > div[style*="display: grid"] p[style] { font-size: 1rem !important; }
+  .section .container > div[style*="display: grid"] .btn-primary,
+  .section .container > div[style*="display: grid"] .btn-rose { width: 100%; justify-content: center; }
+  /* Grids com 2 colunas inline (fotos lado a lado) continuam lado a lado quando há espaço */
+  .reveal-fade-up[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .reveal-fade-up[style*="grid-template-columns: 1fr 1fr"] > div { height: auto !important; aspect-ratio: 3 / 4; min-height: 0 !important; }
+
+  /* Imagens com altura fixa inline: proporção estável */
+  main img[style*="height: 500px"] { height: auto !important; aspect-ratio: 4 / 5; max-height: 520px; }
+
+  /* Grades de cartões de 2 colunas inline (Mulher Inteira › Para quem é) */
+  .bandeiras-grid[style*="repeat(2"] { grid-template-columns: 1fr !important; gap: 14px; }
+  .bandeiras-grid[style*="repeat(2"] .bandeira-card h4 { font-size: 1.1rem !important; }
+
+  /* Projetos de Lei */
+  .featured-project-content { padding: 24px 22px; }
+  .projects-browser-box { padding: 22px 16px; border-radius: 20px; }
+  .browser-header { margin-bottom: 18px; }
+  .browser-title { font-size: 1.3rem; }
+  .search-input-wrap { min-width: 0; max-width: none; width: 100%; flex-basis: 100%; }
+  .category-filter-chips { margin-bottom: 22px; }
+  .law-card { padding: 20px; }
+
+  /* Rodapé */
+  .footer-bottom { font-size: .8rem; line-height: 1.6; }
+
+  /* Modal de notícias/projetos */
+  .modal-backdrop { padding: 12px; align-items: flex-end; }
+  .modal-card { max-height: 92vh; max-height: 92dvh; border-radius: 20px; }
+  .modal-header-img { height: 210px; }
+  .modal-body { padding: 24px 20px 28px; }
+  .modal-close-btn { top: 12px; right: 12px; background: rgba(255,255,255,.94); box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+
+  /* Botões que quebram linha ficam centralizados e respiram */
+  .btn-primary, .btn-secondary, .btn-rose { padding-inline: 20px; }
+}
+
+/* ---------------------------------------------------------------------------
+   10. Celular (≤ 600 px)
+   --------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  /* Destaques de Projetos: imagem em cima, texto embaixo (antes ficava espremido) */
+  .featured-project-card { grid-template-columns: 1fr; }
+  .featured-project-thumb { min-height: 0; height: auto; aspect-ratio: 16 / 10; }
+  .featured-project-thumb img { object-position: center 25%; }
+  .project-title { font-size: 1.2rem; }
+
+  /* Pilares da home: legíveis em vez de 9 px espremidos em 3 colunas */
+  .hero-stats { grid-template-columns: 1fr !important; gap: 0 !important; padding-top: 6px; }
+  .hero-stats .stat-item,
+  .hero-stats .stat-item:first-child { display: flex; align-items: baseline; gap: 14px; padding: 12px 0 !important; border-right: 0; border-bottom: 1px solid rgba(30,58,95,.12); }
+  .hero-stats .stat-item:last-child { border-bottom: 0; }
+  .hero-stats .stat-number { font-size: .85rem !important; margin: 0; min-width: 22px; }
+  .hero-stats .stat-label { font-size: .86rem !important; line-height: 1.4; }
+
+  /* Selo sobre a foto do hero */
+  .badge-text-title { font-size: .82rem; }
+  .badge-text-sub { font-size: .72rem; line-height: 1.4; }
+
+  /* Rodapé: duas colunas de links lado a lado economizam rolagem */
+  .footer-top-grid { grid-template-columns: 1fr 1fr !important; column-gap: 20px; row-gap: 28px; }
+  .footer-top-grid > div:first-child { grid-column: 1 / -1; }
+  .footer-top-grid > div:last-child { grid-column: 1 / -1; }
+  .footer-links-list li a { font-size: .88rem; }
+}
+
+/* ---------------------------------------------------------------------------
+   11. Telas muito estreitas (≤ 380 px — iPhone SE, Androids compactos)
+   --------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .container { padding-inline: 16px; }
+  .hero-title { font-size: 1.9rem; }
+  .page-title { font-size: 1.85rem; }
+  .section-title { font-size: 1.6rem; }
+  /* Cabeçalho das iniciativas (logo MI / 21D) cabia com folga negativa */
+  .site-header .site-logo { min-width: 0; flex: 1 1 auto; overflow: hidden; }
+  .site-header .logo-text { min-width: 0; }
+  .site-header .logo-role { font-size: .62rem; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .site-header .nav-actions { flex: 0 0 auto; }
+  .filter-chip { padding-inline: 14px; }
+  .section .container > div[style*="padding: 56px"],
+  .section .container > div[style*="padding: 48px"] { padding: 18px !important; }
+}
+
+/* ---------------------------------------------------------------------------
+   12. Telas grandes (≥ 1600 px): evita linhas e imagens excessivas
+   --------------------------------------------------------------------------- */
+@media (min-width: 1600px) {
+  .hero-image-card img { height: 640px; }
+}
+
+/* Movimento reduzido também para o hover dos links do rodapé */
+@media (prefers-reduced-motion: reduce) {
+  .footer-links-list li a:hover { transform: none; }
+}
+
+/* Link de WhatsApp no card de contato: área de toque maior */
+.channel-val a { display: inline-block; padding-block: 6px; }
+
+/* Logos das iniciativas (MI / 21D): respiro entre o selo e o nome */
+.site-logo .logo-text { padding-left: 10px; }
+
+@media (max-width: 768px) {
+  /* Fotos de cartões inline: proporção 4:3 em vez de alturas imprevisíveis */
+  .section .container > div[style*="display: grid"] > div[style*="height:"] { aspect-ratio: 4 / 3; min-height: 0 !important; }
+  .section .container > div[style*="display: grid"] > div[style*="height:"] > img { height: 100% !important; }
+  .featured-project-thumb img { object-position: center 18%; }
+}
+
+/* V7.1 — Sem quebras de linha forçadas nos títulos no celular/tablet:
+   os <br> do desktop são ignorados e o título flui naturalmente. */
+@media (max-width: 768px) {
+  h1 br, h2 br, h3 br, .page-title br, .hero-title br, .section-title br, .contato-title br { display: none; }
+  .page-title { font-size: clamp(1.8rem, 7.4vw, 2.6rem); }
+}
+
+/* V8 — acervo de projetos: botão "Mostrar mais" */
+.projects-more-wrap { display: flex; justify-content: center; margin-top: 28px; }
+.projects-more-wrap[hidden] { display: none; }
+.projects-more-btn { min-height: 48px; cursor: pointer; }
+
+/* V8 — Home: título do hero mais contido (antes chegava a 74 px) e sem os pilares 01/02/03 */
+.hero-title { font-size: clamp(2.1rem, 3.5vw, 3.4rem); line-height: 1.12; }
+.hero-actions { margin-bottom: 0; }
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(1.75rem, 7vw, 2.3rem); line-height: 1.16; }
+}
+@media (max-width: 380px) {
+  .hero-title { font-size: 1.7rem; }
+}
+
+/* ==========================================================================
+   V10 — Hero da home com fotografia em tela cheia
+   Desktop: dani-hero-home(.webp/.jpg, 1920×800) com texto à esquerda
+   Celular: dani-hero-home-mobile (800×1200) com texto sobre a área clara do topo
+   ========================================================================== */
+.hero-section.hero-photo {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: #F3E2D4; padding: 0;
+  min-height: clamp(560px, 41.6vw, 800px);
+  display: flex; align-items: center;
+}
+.hero-photo .hero-bg { position: absolute; inset: 0; z-index: -1; display: block; }
+.hero-photo .hero-bg img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 72% center; display: block;
+}
+/* Véu claro à esquerda: garante leitura do texto em qualquer largura */
+.hero-photo::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(246,232,220,.92) 0%, rgba(246,232,220,.7) 34%, rgba(246,232,220,0) 58%);
+}
+.hero-photo .container { width: 100%; }
+.hero-photo .hero-grid { display: block; }
+.hero-photo .hero-content { max-width: 620px; padding: clamp(56px, 6vw, 96px) 0; }
+.hero-photo .hero-title { color: var(--navy-900); }
+.hero-photo .hero-title .serif { color: #24507E; }
+.hero-photo .hero-desc { color: #3E4D5A; max-width: 540px; }
+.hero-photo .btn-secondary { background: rgba(255,255,255,.55); border-color: rgba(30,58,95,.18); }
+.hero-photo .btn-secondary:hover { background: #fff; }
+
+@media (max-width: 1100px) {
+  .hero-photo .hero-content { max-width: 52%; }
+  .hero-photo .hero-bg img { object-position: 78% center; }
+  .hero-photo::before { background: linear-gradient(90deg, rgba(246,232,220,.95) 0%, rgba(246,232,220,.8) 42%, rgba(246,232,220,0) 66%); }
+}
+
+@media (max-width: 768px) {
+  /* Texto no topo claro da foto vertical; a foto continua por baixo */
+  .hero-section.hero-photo { display: flex; flex-direction: column; align-items: stretch; min-height: 0; background: #F6E3D5; }
+  .hero-photo::before { display: none; }
+  .hero-photo .container { order: 1; position: relative; z-index: 1; }
+  .hero-photo .hero-content { max-width: none; padding: 36px 0 0; }
+  .hero-photo .hero-bg { order: 2; position: relative; inset: auto; z-index: 0; margin-top: -46vw; }
+  .hero-photo .hero-bg img { height: auto; aspect-ratio: 2 / 3; object-position: center top; }
+  .hero-photo .hero-actions { margin-bottom: 0; }
+}
+@media (max-width: 1100px) { .hero-photo .hero-content { max-width: 48%; } }
+@media (max-width: 768px) {
+  .hero-photo .hero-content { max-width: none; }
+  .hero-photo .hero-bg img { max-height: 760px; }
+}
+
+/* V11 — Hero com foto também na página "Quem é Dani Alonso" (variação escura) */
+.page-hero.hero-photo {
+  position: relative; overflow: hidden; isolation: isolate; border: 0;
+  padding: 0; min-height: clamp(480px, 41.6vw, 800px); display: flex; align-items: center;
+}
+.page-hero.hero-photo .container { width: 100%; }
+.page-hero.hero-photo .hero-content { max-width: 560px; padding: clamp(56px, 6vw, 96px) 0; }
+.hero-photo--dark { background: #2A2A30; }
+.hero-photo--dark::before {
+  background: linear-gradient(90deg, rgba(40,30,26,.55) 0%, rgba(40,30,26,.25) 38%, rgba(40,30,26,0) 56%);
+}
+.hero-photo--dark .page-tag { color: #E6C677 !important; }
+.hero-photo--dark .page-tag::before { background: #E6C677; }
+.hero-photo--dark .page-title { color: #F8F7F4; }
+.hero-photo--dark .page-title .serif { color: #E9D3B4 !important; }
+.hero-photo--dark .page-desc { color: #E9E4DD; font-size: 1.08rem; }
+@media (max-width: 1100px) {
+  .page-hero.hero-photo .hero-content { max-width: 46%; }
+  .hero-photo--dark::before { background: linear-gradient(90deg, rgba(30,24,22,.72) 0%, rgba(30,24,22,.45) 44%, rgba(30,24,22,0) 64%); }
+}
+@media (max-width: 768px) {
+  .page-hero.hero-photo { flex-direction: column; align-items: stretch; min-height: 0; }
+  .page-hero.hero-photo .hero-content { max-width: none; padding: 40px 0 0; }
+  .hero-photo--dark { background: #0F181F; }
+  .hero-photo--dark::before { display: none; }
+}
+
+/* V11 — Hero com foto na página Autogoverno | Método 21D (variação quente) */
+.hero-photo--warm { background: #9A6B51; }
+.hero-photo--warm::before {
+  background: linear-gradient(90deg, rgba(74,44,28,.62) 0%, rgba(74,44,28,.38) 36%, rgba(74,44,28,0) 56%);
+}
+.hero-photo--warm .page-tag { color: #FFE7B8 !important; }
+.hero-photo--warm .page-tag::before { background: #FFE7B8; }
+.hero-photo--warm .page-title { color: #FFFFFF; text-shadow: 0 2px 18px rgba(60,32,18,.25); }
+.hero-photo--warm .page-title .serif { color: #FFE7B8 !important; }
+.hero-photo--warm .hero-quote {
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem); font-weight: 600; font-style: italic; line-height: 1.55;
+  color: #FFF4E6; margin-bottom: 16px; max-width: 30ch;
+}
+.hero-photo--warm .page-desc { color: #FBEDE1; font-size: 1.05rem; }
+@media (max-width: 1100px) {
+  .hero-photo--warm::before { background: linear-gradient(90deg, rgba(74,44,28,.75) 0%, rgba(74,44,28,.5) 44%, rgba(74,44,28,0) 66%); }
+}
+@media (max-width: 768px) {
+  .hero-photo--warm { background: #9A6B51; }
+  .hero-photo--warm::before {
+    display: block; z-index: 1; height: 62%; bottom: auto;
+    background: linear-gradient(180deg, rgba(74,44,28,.42) 0%, rgba(74,44,28,.3) 55%, rgba(74,44,28,0) 100%);
+  }
+  .page-hero.hero-photo--warm .container { z-index: 2; }
+}
+.hero-photo--warm .page-title .serif { white-space: nowrap; }
+.hero-photo--warm .page-tag { color: #FFFFFF !important; }
+.hero-photo--warm .page-tag::before { background: #FFE7B8; }
+@media (min-width: 769px) {
+  .hero-photo--warm::before {
+    background:
+      radial-gradient(ellipse 60% 85% at 18% 50%, rgba(70,40,24,.55) 0%, rgba(70,40,24,0) 70%),
+      linear-gradient(90deg, rgba(70,40,24,.55) 0%, rgba(70,40,24,.35) 38%, rgba(70,40,24,0) 58%);
+  }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+  .hero-photo--warm::before {
+    background: linear-gradient(90deg, rgba(70,40,24,.8) 0%, rgba(70,40,24,.58) 46%, rgba(70,40,24,0) 68%);
+  }
+}
+@media (min-width: 769px) {
+  .hero-photo--warm::before {
+    background: linear-gradient(90deg, rgba(64,36,22,.74) 0%, rgba(64,36,22,.6) 30%, rgba(64,36,22,.28) 46%, rgba(64,36,22,0) 60%);
+  }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+  .page-hero.hero-photo--warm .hero-content { max-width: 44%; }
+  .hero-photo--warm::before { background: linear-gradient(90deg, rgba(64,36,22,.82) 0%, rgba(64,36,22,.66) 42%, rgba(64,36,22,0) 64%); }
+}
+/* Ordem de camadas: foto (‑2) < véu (‑1) < texto */
+@media (min-width: 769px) { .hero-photo .hero-bg { z-index: -2; } }
+
+/* V11 — Banner "Projetos aprovados" da home sem foto: texto à esquerda, ação à direita */
+.projects-cta-banner { position: relative; overflow: hidden; }
+.projects-cta-banner::after {
+  content: ''; position: absolute; right: -120px; top: -140px; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,198,119,.16) 0%, rgba(230,198,119,0) 70%); pointer-events: none;
+}
+.projects-cta-banner > div {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(32px, 5vw, 80px); align-items: center;
+}
+.projects-cta-banner > div > :not(a) { grid-column: 1; max-width: 720px; }
+.projects-cta-banner > div > a { grid-column: 2; grid-row: 1 / span 3; align-self: center; white-space: nowrap; }
+.projects-cta-banner > div > p { margin-bottom: 0 !important; }
+.projects-cta-banner .btn-primary {
+  background: #F8F7F4 !important; color: var(--navy-900) !important; min-height: 54px; padding-inline: 28px;
+}
+.projects-cta-banner .btn-primary:hover { background: #E6C677 !important; color: var(--navy-950) !important; }
+@media (max-width: 900px) {
+  .projects-cta-banner > div { grid-template-columns: 1fr; row-gap: 0; }
+  .projects-cta-banner > div > a { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 28px; white-space: normal; }
+}
+@media (max-width: 768px) {
+  .projects-cta-banner > div > a { width: 100%; justify-content: center; }
+}
+
+/* Cards de iniciativas: enquadramento das novas fotos */
+.initiative-card--mulher .initiative-media img { object-position: center 45%; }
+.initiative-card--autogoverno .initiative-media img { object-position: center 30%; }
+.initiative-card--autogoverno .initiative-media { background: #B98A6C; }
+.projects-cta-banner h2 { font-size: clamp(1.55rem, 6.2vw, 2.2rem) !important; line-height: 1.22 !important; }
+@media (max-width: 768px) { .projects-cta-banner h2 br { display: none; } .projects-cta-banner p { font-size: 1rem !important; } }
+
+/* Home › "Quem é a deputada": foto no plenário da ALESP */
+.bio-single-image .bio-main-image picture { display: block; }
+.bio-single-image .bio-main-image img { width: 100%; object-position: center 30%; }
+
+/* A Deputada — fotos em proporção natural: nada de cabeças cortadas nem imagens gigantes */
+.ad-photo { display: block; width: 100%; height: auto; max-height: 620px; object-fit: cover; object-position: center top; }
+.ad-photo-frame { max-width: 460px; width: 100%; margin-inline: auto; }
+@media (max-width: 768px) {
+  .ad-photo { max-height: 520px; }
+  .ad-photo-frame { max-width: 420px; }
+  .section .container > div[style*="display: grid"] > div.ad-photo-frame { aspect-ratio: auto; min-height: 0 !important; }
+}
+
+/* ==========================================================================
+   V12 — O Que Defendo: hero com foto (variação clara) e carrossel de fotos
+   ========================================================================== */
+.hero-photo--light { background: #E9E7EA; }
+.hero-photo--light::before {
+  background: linear-gradient(90deg, rgba(246,245,247,.94) 0%, rgba(246,245,247,.82) 32%, rgba(246,245,247,.35) 48%, rgba(246,245,247,0) 58%);
+}
+.hero-photo--light .hero-bg img { object-position: 70% center; }
+@media (max-width: 1100px) {
+  .hero-photo--light::before { background: linear-gradient(90deg, rgba(246,245,247,.95) 0%, rgba(246,245,247,.86) 44%, rgba(246,245,247,0) 66%); }
+}
+@media (max-width: 768px) {
+  /* Foto horizontal sem versão vertical própria: texto em cima, recorte 4:5 centrado na Dani embaixo */
+  .hero-photo--stack { background: #EEEDEF; }
+  .hero-photo--stack .page-tag, .hero-photo--stack .page-title { color: var(--navy-900); }
+  .page-hero.hero-photo--stack .hero-content { padding-bottom: 28px; }
+  .hero-photo--stack .hero-bg { margin-top: 0; }
+  .hero-photo--stack .hero-bg img { aspect-ratio: 4 / 5; max-height: 560px; object-position: center top; }
+}
+
+/* Carrossel de fotos (proporção quadrada original, sem cortes) */
+.media-carousel { position: relative; width: 100%; max-width: 520px; margin-inline: auto; min-width: 0; }
+.media-carousel__track {
+  list-style: none; margin: 0; padding: 0; display: flex; gap: 16px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none; border-radius: 22px;
+}
+.media-carousel__track::-webkit-scrollbar { display: none; }
+.media-carousel__track:focus-visible { outline: 3px solid #9D8357; outline-offset: 4px; }
+.media-carousel__slide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+.media-carousel__slide img {
+  display: block; width: 100%; height: auto; aspect-ratio: 594 / 590; object-fit: cover; border-radius: 22px;
+}
+.media-carousel__controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 16px; }
+.media-carousel__btn {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: #fff; color: var(--navy-900); border: 1px solid var(--border-medium); box-shadow: var(--shadow-xs);
+  transition: background .2s ease, color .2s ease, opacity .2s ease;
+}
+.media-carousel__btn:hover { background: var(--navy-900); color: #fff; }
+.media-carousel__btn[disabled] { opacity: .35; cursor: default; background: #fff; color: var(--navy-900); }
+.media-carousel__dots { display: flex; gap: 4px; }
+.media-carousel__dot {
+  width: 28px; height: 28px; border-radius: 50%; padding: 0; cursor: pointer; background: transparent;
+  display: grid; place-items: center;
+}
+.media-carousel__dot::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: rgba(30,58,95,.25); transition: all .2s ease; }
+.media-carousel__dot[aria-current="true"]::before { width: 22px; border-radius: 5px; background: var(--navy-900); }
+@media (prefers-reduced-motion: reduce) { .media-carousel__track { scroll-behavior: auto; } }
+
+/* V13 — Minhas Bandeiras: topo só com texto (sem foto) */
+.page-hero-inner--text { max-width: 780px; }
+.page-hero-inner--text .page-desc { max-width: 680px; }
+.page-hero-inner--text p[style] { max-width: 680px; }
+
+/* ==========================================================================
+   V13 — Galeria: arquivo completo com filtro por ano e lightbox navegável
+   ========================================================================== */
+.gallery-archive { margin-top: clamp(64px, 8vw, 110px); }
+.gallery-archive__header { margin-inline: auto; text-align: center; }
+.gallery-archive__filters { justify-content: center; margin-bottom: 12px; }
+.gallery-archive__count { text-align: center; color: var(--text-muted); font-size: .88rem; margin-bottom: 22px; }
+.gallery-archive__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1.2vw, 16px);
+}
+.gallery-archive__item {
+  display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden;
+  border-radius: 14px; background: #EDE3D7; aspect-ratio: 1 / 1;
+}
+.gallery-archive__item img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block;
+  transition: transform .5s var(--ease-smooth, ease);
+}
+.gallery-archive__item:hover img { transform: scale(1.04); }
+.gallery-archive__item:focus-visible { outline: 3px solid #9D8357; outline-offset: 3px; }
+@media (max-width: 960px) { .gallery-archive__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .gallery-archive__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Lightbox: foto inteira (sem corte) e setas de navegação */
+.lightbox-img-wrap img { object-fit: contain; width: auto; height: auto; max-width: min(92vw, 1400px); max-height: 80vh; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.25);
+}
+.lightbox-nav:hover { background: rgba(255,255,255,.28); }
+.lightbox-nav[hidden] { display: none; }
+.lightbox-nav--prev { left: clamp(8px, 2vw, 32px); }
+.lightbox-nav--next { right: clamp(8px, 2vw, 32px); }
+@media (max-width: 768px) {
+  .lightbox-nav { top: auto; bottom: 18px; transform: none; width: 48px; height: 48px; }
+  .lightbox-img-wrap img { max-height: 70vh; }
+}
+
+/* V14 — Cards de iniciativas da home: imagens nítidas (fonte em alta) */
+.initiative-media picture { display: block; width: 100%; height: 100%; }
+.initiative-card--mulher .initiative-media img { object-position: center 35%; }
+.initiative-card--autogoverno .initiative-media img { object-position: 55% 25%; }
+
+/* Método 21D — imagens 4:5 inteiras, com tamanho contido */
+.m21-photo { max-width: 420px; }
+.m21-photo picture { display: block; }
+.m21-photo .ad-photo { max-height: none; aspect-ratio: 4 / 5; }
+@media (max-width: 768px) { .m21-photo { max-width: 380px; } }
+
+/* O Que Defendo — foto vertical própria no celular, sem recorte */
+@media (max-width: 768px) {
+  .hero-photo--stack .hero-bg img { aspect-ratio: 4 / 5; max-height: none; object-position: center top; }
+}
+@media (max-width: 768px) {
+  /* Foto vertical própria: o topo cinza claro fica sob o texto, como na home */
+  .hero-photo--stack { background: #C9C6C9; }
+  .hero-photo--stack .hero-bg { margin-top: -38vw; }
+}
+@media (max-width: 768px) { .hero-photo--stack .page-desc { color: #33414D; } }
+@media (max-width: 768px) {
+  .hero-photo--stack { background: #BAB4B6; }
+  .hero-photo--stack .page-desc { color: #24313C; }
+  .hero-photo--stack .page-tag { color: #1E3A5F !important; }
+}
+
+/* V15 — Logo oficial (vetorizada a partir do arquivo enviado) */
+.brand-logo { display: block; width: auto; height: 58px; flex: 0 0 auto; }
+.site-header .site-logo { min-width: 0; }
+.mobile-menu-header .brand-logo { height: 50px; }
+.site-footer .brand-logo { height: 72px; }
+@media (max-width: 768px) {
+  .site-header .brand-logo { height: 48px; }
+  .site-footer .brand-logo { height: 64px; }
+}
+.gallery-archive--solo { margin-top: 0; }

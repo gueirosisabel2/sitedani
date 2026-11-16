@@ -1,0 +1,220 @@
+/* ===========================================================================
+   MULHER INTEIRA • Identidade visual 2.0 (manual de marca 2026, Figma)
+   Aplicada somente na página mulher-inteira.html (body.theme-mi).
+   Paleta: Azul Petróleo #2F4F6B · Verde Profundo #355853 · Verde Sálvia #7A9578
+           Névoa #DCE8E5 · Bege Natural #E8DDD0 · Terracota Suave #D8A48B
+           Terracota Escura #A0583D · Dourado #E8A33A (acento) · Creme Claro #F8F4EE
+   Tipografia: Montserrat (estrutura) + Lora Italic (destaques editoriais e citações)
+   =========================================================================== */
+body.theme-mi {
+  --mi-petroleo: #2F4F6B;
+  --mi-verde: #355853;
+  --mi-salvia: #7A9578;
+  --mi-nevoa: #DCE8E5;
+  --mi-bege: #E8DDD0;
+  --mi-terracota-suave: #D8A48B;
+  --mi-terracota: #A0583D;
+  --mi-dourado: #E8A33A;
+  --mi-creme: #F8F4EE;
+  --mi-lora: 'Lora', Georgia, 'Times New Roman', serif;
+
+  /* Remapeia os tokens do site para a paleta do movimento (escopo da página) */
+  --navy-950: #263F56;
+  --navy-900: #2F4F6B;
+  --navy-850: #2F4F6B;
+  --navy-800: #355853;
+  --navy-700: #355853;
+  --navy-600: #7A9578;
+  --navy-100: #DCE8E5;
+  --navy-50: #EEF4F2;
+  --rose-900: #7E432E;
+  --rose-800: #A0583D;
+  --rose-700: #A0583D;
+  --rose-600: #A0583D;
+  --rose-500: #D8A48B;
+  --rose-100: #F3E5DC;
+  --rose-50: #FAF1EA;
+  --gold-400: #E8A33A;
+  --bg-body: #F8F4EE;
+  --bg-subtle: #F1EBE2;
+  --bg-muted: #E8DDD0;
+  --text-main: #2F4F6B;
+  --text-body: #4A5D6C;
+  --text-muted: #5B6B78;
+  --font-serif: var(--mi-lora);
+  background: var(--mi-creme);
+  color: var(--text-body);
+}
+body.theme-mi ::selection { background: var(--mi-nevoa); color: var(--mi-verde); }
+body.theme-mi :focus-visible { outline-color: var(--mi-dourado); }
+
+/* ---------- Topo, cabeçalho e menu ---------- */
+.theme-mi .top-bar { background: var(--mi-verde); color: #E6EFEC; }
+.theme-mi .site-header { background: rgba(248,244,238,.97); border-bottom-color: #E8DDD0; }
+.theme-mi .mi-brand { display: flex; align-items: center; min-width: 0; }
+.theme-mi .mi-logo { display: block; width: auto; height: 58px; max-width: 100%; }
+.theme-mi .mobile-menu-header .mi-logo { height: 46px; }
+.theme-mi .nav-link { color: var(--mi-petroleo); }
+.theme-mi .nav-link:hover { background: #EFE7DC; color: var(--mi-verde); }
+.theme-mi .nav-link.active { background: var(--mi-bege); color: var(--mi-verde); }
+.theme-mi .btn-mobile-toggle { background: #EFE7DC; color: var(--mi-verde); }
+.theme-mi .mobile-menu-drawer { background: var(--mi-creme); }
+
+/* ---------- Botões ---------- */
+.theme-mi .btn-rose { background: var(--mi-terracota); color: #fff; border-radius: 999px; padding-inline: 26px; }
+.theme-mi .btn-rose:hover { background: #874832; box-shadow: 0 12px 26px rgba(160,88,61,.22); }
+
+/* ---------- Sobrelinhas: traço dourado 28×2 + petróleo espaçado ---------- */
+.theme-mi .page-tag, .theme-mi .section-tag,
+.theme-mi .page-tag.rose, .theme-mi .section-tag.rose {
+  color: var(--mi-petroleo) !important; font-weight: 600; letter-spacing: .22em; font-size: .72rem;
+}
+.theme-mi .page-tag::before, .theme-mi .section-tag::before,
+.theme-mi .page-tag.rose::before, .theme-mi .section-tag.rose::before {
+  width: 28px; height: 2px; border-radius: 0; background: var(--mi-dourado);
+}
+
+/* ---------- Títulos: Montserrat estrutural + destaque em Lora Italic com a curva terracota ---------- */
+.theme-mi .page-title, .theme-mi .section-title {
+  color: var(--mi-petroleo); font-weight: 700; letter-spacing: -.035em;
+}
+.theme-mi .page-title .rose-serif, .theme-mi .section-title .rose-serif,
+.theme-mi .page-title .serif, .theme-mi .section-title .serif {
+  font-family: var(--mi-lora) !important; font-style: italic !important; font-weight: 500 !important;
+  color: var(--mi-terracota) !important; letter-spacing: -.01em;
+  padding-bottom: 0; background: none;
+}
+.theme-mi .bandeira-title, .theme-mi .bandeira-card h4 { color: var(--mi-petroleo) !important; }
+
+/* ---------- Hero ---------- */
+.theme-mi .mi-hero {
+  position: relative; overflow: hidden; border-bottom: 0;
+  background: linear-gradient(180deg, var(--mi-creme) 0%, #F3EDE4 100%) !important;
+}
+.theme-mi .mi-hero-ramo {
+  position: absolute; z-index: 0; pointer-events: none;
+  right: -40px; bottom: -120px; width: clamp(220px, 26vw, 380px); height: auto;
+  opacity: .55; transform: rotate(-15deg);
+}
+.theme-mi .mi-hero .container { position: relative; z-index: 1; }
+.theme-mi .mi-hero-lead {
+  font-family: var(--mi-lora); font-style: italic; font-weight: 400;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.5; color: var(--mi-verde);
+  margin-bottom: 18px; max-width: 32ch;
+}
+.theme-mi .page-desc { color: var(--text-body); }
+.theme-mi .mi-hero-image {
+  position: relative; overflow: visible; border: 0; box-shadow: none; background: transparent;
+}
+.theme-mi .mi-hero-image::before {
+  content: ''; position: absolute; z-index: 0; inset: -9% -10% -12% -6%;
+  background: url('../images/mulher-inteira/forma-nevoa.svg') no-repeat center / 100% 100%;
+  transform: rotate(10deg);
+}
+.theme-mi .mi-hero-image img {
+  z-index: 1; border-radius: 28px; border: 6px solid #fff;
+  box-shadow: 0 24px 48px rgba(46,79,107,.16);
+}
+
+/* ---------- Seção Conceito: foto com moldura orgânica ---------- */
+.theme-mi .section[style*="#ffffff"] { background: #fff !important; }
+.theme-mi .bio-paragraphs p:first-child[style] {
+  font-family: var(--mi-lora); font-style: italic; font-weight: 500 !important;
+  font-size: 1.3rem !important; color: var(--mi-terracota) !important; line-height: 1.45;
+}
+
+/* ---------- História do movimento ---------- */
+.theme-mi .movement-story {
+  background: linear-gradient(180deg, #EEF4F2 0%, var(--mi-creme) 100%) !important;
+}
+.theme-mi .movement-story__lead { color: var(--text-body); }
+.theme-mi .movement-story__quote {
+  background: #fff; border: 1px solid #E3EBE8; border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(46,79,107,.08); position: relative; overflow: hidden;
+}
+.theme-mi .movement-story__quote-text {
+  font-family: var(--mi-lora); font-style: italic; font-weight: 400;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem); line-height: 1.5; color: var(--mi-petroleo);
+}
+.theme-mi .movement-story__quote-caption { color: var(--mi-terracota); letter-spacing: .2em; font-weight: 600; }
+
+/* Cartões e ícones da iconografia oficial (contorno Verde Profundo + forma névoa) */
+.theme-mi .bandeira-card {
+  background: #fff; border: 1px solid #E8E1D6; border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(46,79,107,.05);
+}
+.theme-mi .bandeira-card::before { display: none; }
+.theme-mi .bandeira-card:hover { border-color: #D5E2DE; box-shadow: 0 18px 40px rgba(46,79,107,.10); }
+.theme-mi .bandeira-desc { color: var(--text-body) !important; }
+.theme-mi .feature-icon-box.mi-icon {
+  width: 84px; height: 84px; border-radius: 0; box-shadow: none; position: relative;
+  background: url('../images/mulher-inteira/forma-nevoa.svg') no-repeat center / 100% auto;
+}
+.theme-mi .bandeira-card:nth-child(even) .feature-icon-box.mi-icon {
+  background-image: url('../images/mulher-inteira/forma-bege.svg');
+}
+.theme-mi .feature-icon-box.mi-icon img { width: 64px; height: 64px; display: block; }
+
+/* ---------- Auditórios ---------- */
+.theme-mi .reveal-fade-up[style*="border-radius: var(--radius-xl)"] { border-radius: 28px !important; box-shadow: 0 24px 48px rgba(46,79,107,.14) !important; }
+
+/* ---------- Para quem é ---------- */
+.theme-mi .section[style*="--bg-subtle"] { background: #F1EBE2 !important; }
+.theme-mi .section[style*="--bg-subtle"] .bandeira-card { border-left: 3px solid var(--mi-salvia); }
+.theme-mi .section[style*="--bg-subtle"] .bandeira-card:nth-child(even) { border-left-color: var(--mi-terracota-suave); }
+
+/* ---------- Chamado final ---------- */
+.theme-mi .mulher-closing {
+  position: relative; overflow: hidden;
+  background: var(--mi-verde); border: 0; border-radius: 28px; color: var(--mi-creme);
+  padding: clamp(32px, 5vw, 60px) clamp(22px, 5vw, 64px);
+}
+.theme-mi .mulher-closing::after {
+  content: ''; position: absolute; right: -60px; bottom: -70px; width: 240px; height: 200px;
+  background: url('../images/mulher-inteira/forma-nevoa.svg') no-repeat center / contain; opacity: .12;
+}
+.theme-mi .mi-closing-symbol { width: 92px; height: auto; margin: 0 auto 18px; display: block; position: relative; z-index: 1; }
+.theme-mi .mulher-closing-quote {
+  font-family: var(--mi-lora); font-style: italic; font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem); line-height: 1.5; color: var(--mi-creme);
+  position: relative; z-index: 1;
+}
+.theme-mi .mi-closing-text { font-size: 1.02rem; color: #DCE8E5; margin-bottom: 28px; position: relative; z-index: 1; }
+.theme-mi .mulher-closing .btn-rose { background: var(--mi-creme); color: var(--mi-verde); position: relative; z-index: 1; }
+.theme-mi .mulher-closing .btn-rose:hover { background: #fff; box-shadow: 0 12px 26px rgba(0,0,0,.18); }
+
+/* ---------- Rodapé ---------- */
+.theme-mi .site-footer { background: var(--mi-verde); border-top: 4px solid var(--mi-dourado); color: #E6EFEC; }
+.theme-mi .mi-footer-logo .mi-logo { height: 64px; }
+.theme-mi .footer-brand-desc { color: #DCE8E5; }
+.theme-mi .footer-links-list li a { color: #E6EFEC; }
+.theme-mi .footer-links-list li a:hover { color: var(--mi-dourado); }
+.theme-mi .site-footer .footer-bottom { color: #C9D8D4; border-color: rgba(255,255,255,.14); }
+.theme-mi .mi-footer-tagline { font-family: var(--mi-lora); font-style: italic; color: var(--mi-creme); font-size: .95rem; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1230px) {
+  .theme-mi .mi-logo { height: 50px; }
+}
+@media (max-width: 768px) {
+  .theme-mi .mi-logo { height: 42px; }
+  .theme-mi .mi-hero-ramo { width: 170px; right: -50px; bottom: -70px; opacity: .4; }
+  .theme-mi .mi-hero-image::before { inset: -6% -6% -8% -4%; }
+  .theme-mi .feature-icon-box.mi-icon { width: 72px; height: 72px; }
+  .theme-mi .feature-icon-box.mi-icon img { width: 56px; height: 56px; }
+  .theme-mi .mi-closing-symbol { width: 76px; }
+  .theme-mi .mi-footer-logo .mi-logo { height: 54px; }
+}
+@media (max-width: 380px) {
+  .theme-mi .mi-logo { height: 36px; }
+}
+.theme-mi .top-bar-socials a[style] { color: var(--mi-creme) !important; }
+.theme-mi .top-bar-socials a[style]:hover { color: var(--mi-dourado) !important; }
+
+/* V13 — Fotos novas em proporção original (sem cortar cabeças) */
+.theme-mi .mi-hero-image { min-height: 0 !important; aspect-ratio: auto !important; max-width: 640px; width: 100%; margin-inline: auto; }
+.theme-mi .mi-hero-image picture { display: block; position: relative; z-index: 1; }
+.theme-mi .mi-hero-image img { position: static !important; inset: auto; width: 100%; height: auto !important; object-fit: contain; }
+.theme-mi .mi-photo-frame picture, .theme-mi .mi-photo-frame img { display: block; }
+.theme-mi .mi-photo-frame .ad-photo { max-height: none; }
+.theme-mi .mi-auditorio-img { display: block; width: 100%; height: auto; }
